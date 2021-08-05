@@ -14,12 +14,13 @@ class Drone
             x : 0,
             y : 0
         };
+        this.spd = 5;
 
         // Appearance Variables
         this.size        = 15;
         this.border_size = 3;
         this.color = {
-            background : "#800080",
+            background : "rgba(80, 00, 80, 1)",
             border     : "#FFFFFF"
         };
     }
@@ -45,5 +46,13 @@ class Drone
     set_border_color(color_code)
     {
         this.color.border = color_code;
+    }
+}
+
+class Formation
+{
+    constructor()
+    {
+        this.drone_spacing = 5;
     }
 }

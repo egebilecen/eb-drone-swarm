@@ -11,15 +11,23 @@ $(() => {
     $("#swarm-formation").tooltip();
 
     // EVENTS
+    // Click on canvas
+    $("canvas#main").on("click", (e) => {
+        console.log("Clicked on canvas.");
+        console.log(e);
+    });
+
     // Add new drone to swarm
     $("#add-drone").on("click", () => {
         let drone = new Drone();
+        drone.set_background_color(random_color());
 
         drone_list.push(drone);
         
         debug_log("Add Drone", "Added new drone!", drone_list);
     });
 
+    // Change swarm formation
     $("#swarm-formation").on("change", () => {
         console.log("Swarm formation changed!");
     });

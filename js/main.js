@@ -21,5 +21,9 @@ setInterval(() => {
     clear_canvas(ctx);
 
     // draw everything in here
-    for(let i in drone_list) draw_drone(ctx, drone_list[i]);
+    for(let i in drone_list)
+    {
+        let drone = drone_list[i];
+        draw_drone(ctx, drone);
+    }
 }, 1000 / FPS);
