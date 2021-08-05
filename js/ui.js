@@ -1,5 +1,6 @@
-function show_popup(title, text)
+function show_popup(title, text, type="dark")
 {
+    $("#alert-popup > * div.alert").attr("class", "alert alert-"+type)
     $("#alert-popup > * div.alert > h4").html(title);
     $("#alert-popup > * div.alert > p").html(text);
     $("#alert-popup").css("top", window.innerHeight / 2 - $("#alert-popup").css("height").replace("px", ""));
@@ -34,31 +35,31 @@ $(() => {
         {
             case 1:
             {
-                show_popup("Error", "Formation is not yet implemented.");
+                show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
             break;
 
             case 2:
             {
-                show_popup("Error", "Formation is not yet implemented.");
+                show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
             break;
 
             case 3:
             {
-                show_popup("Error", "Formation is not yet implemented.");
+                show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
             break;
 
             case 4:
             {
-                show_popup("Error", "Formation is not yet implemented.");
+                show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
             break;
         
             default:
             {
-                show_popup("Error", "Unknown formation.");
+                show_popup("Error", "Unknown formation.", "danger");
             }
             break;
         }
