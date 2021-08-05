@@ -13,8 +13,7 @@ $(() => {
     // EVENTS
     // Click on canvas
     $("canvas#main").on("click", (e) => {
-        console.log("Clicked on canvas.");
-        console.log(e);
+        console.log(e.pageX+","+e.pageY);
     });
 
     // Add new drone to swarm
@@ -29,7 +28,40 @@ $(() => {
 
     // Change swarm formation
     $("#swarm-formation").on("change", () => {
-        console.log("Swarm formation changed!");
+        let formation_number = parseInt($("#swarm-formation").val());
+
+        switch (formation_number) 
+        {
+            case 1:
+            {
+                show_popup("Error", "Formation is not yet implemented.");
+            }
+            break;
+
+            case 2:
+            {
+                show_popup("Error", "Formation is not yet implemented.");
+            }
+            break;
+
+            case 3:
+            {
+                show_popup("Error", "Formation is not yet implemented.");
+            }
+            break;
+
+            case 4:
+            {
+                show_popup("Error", "Formation is not yet implemented.");
+            }
+            break;
+        
+            default:
+            {
+                show_popup("Error", "Unknown formation.");
+            }
+            break;
+        }
     });
     
     $("#close-popup").on("click", () => {
