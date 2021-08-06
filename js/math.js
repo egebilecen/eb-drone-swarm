@@ -11,6 +11,16 @@ function rad_to_deg(rad_val)
     return rad_val * (180 / Math.PI);
 }
 
+function deg_to_rad(deg_val)
+{
+    return deg_val * (Math.PI / 180);
+}
+
+function distance_of(pt1, pt2)
+{
+    return Math.sqrt(Math.pow(pt2.x - pt1.x, 2), Math.pow(pt2.y - pt1.y, 2));
+}
+
 function compass_angle_of(pt1, pt2)
 {
     let deltaX = pt2.x - pt1.x;

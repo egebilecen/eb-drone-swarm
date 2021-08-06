@@ -20,7 +20,7 @@ function update_swarm_dest(e, log=true)
     drone_swarm.drone_list[0].pos.dest.x = destX;
     drone_swarm.drone_list[0].pos.dest.y = destY;
 
-    if(log) debug_log("Canvas onclick", "Swarm target position: ", drone_swarm.dest, compass_angle_of(drone_swarm.drone_list[0].pos, drone_swarm.dest));
+    if(log) debug_log("Canvas onclick", "Swarm target position: ", drone_swarm.dest, compass_angle_of(drone_swarm.drone_list[0].pos, drone_swarm.dest), distance_of(drone_swarm.drone_list[0].pos, drone_swarm.dest));
 }
 
 $(() => {

@@ -52,6 +52,9 @@ class Drone
     {
         if(this.pos.dest.x != -1 && this.pos.dest.y != -1)
         {
+            let heading = angle_of(this.pos, this.pos.dest);
+
+            /*
             // X
             if(this.pos.x <= this.pos.dest.x) this.pos.x += this.spd;
             else                              this.pos.x -= this.spd;
@@ -61,6 +64,10 @@ class Drone
             if(this.pos.y <= this.pos.dest.y) this.pos.y += this.spd;
             else                              this.pos.y -= this.spd;
             if(Math.abs(this.pos.y - this.pos.dest.y) <= this.spd) this.pos.y = this.pos.dest.y;
+            */
+
+            // this.pos.x += this.spd * Math.cos(heading);
+            // this.pos.y += this.spd * Math.sin(heading);
         }
     }
 }
