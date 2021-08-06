@@ -31,9 +31,10 @@ setInterval(() => {
     for(let i in drone_swarm.drone_list)
     {
         let drone = drone_swarm.drone_list[i];
-        draw_drone(ctx, drone);
 
         if(drone.pos.dest.x != -1 || drone.pos.dest.y != -1)
             draw_drone_path_line(ctx, drone);
+        
+        draw_drone(ctx, drone);
     }
 }, 1000 / FPS);

@@ -12,7 +12,18 @@ function draw_drone(ctx, drone)
 
 function draw_drone_path_line(ctx, drone)
 {
-    
+    ctx.beginPath();
+    ctx.moveTo(drone.pos.x,  drone.pos.y);
+    ctx.lineTo(drone.pos.dest.x, drone.pos.dest.y);
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.arc(drone.pos.dest.x, drone.pos.dest.y, 6, 0, 2 * Math.PI, false);
+    ctx.fillStyle = "white";
+    ctx.fill();
+    ctx.closePath();
 }
 
 function clear_canvas(ctx)

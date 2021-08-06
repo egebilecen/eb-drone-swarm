@@ -16,8 +16,14 @@ $(() => {
     $("canvas#main").on("click", (e) => {
         if(drone_swarm.drone_list.length < 1) return;
 
-        drone_swarm.dest.x = e.pageX;
-        drone_swarm.dest.y = e.pageY;
+        let destX = e.pageX * DPI;
+        let destY = e.pageY * DPI;
+
+        drone_swarm.dest.x = destX;
+        drone_swarm.dest.y = destY;
+
+        drone_swarm.drone_list[0].pos.dest.x = destX;
+        drone_swarm.drone_list[0].pos.dest.y = destY;
 
         debug_log("Canvas onclick", "Swarm target position: ", drone_swarm.dest);
     });
