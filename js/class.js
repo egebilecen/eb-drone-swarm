@@ -66,11 +66,3 @@ class Drone
         }
     }
 }
-
-class Formation
-{
-    constructor()
-    {
-        this.drone_spacing = 5;
-    }
-}

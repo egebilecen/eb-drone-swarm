@@ -16,6 +16,13 @@ canvas.setAttribute("height", getComputedStyle(canvas).getPropertyValue("height"
 
 // Drone related
 const MAX_DRONE_COUNT  = 10;
+const DRONE_SWARM_FORMATION = {
+    none      : 0,
+    line      : 1,
+    v_shape   : 2,
+    perimeter : 3,
+    circle    : 4
+};
 let   drone_swarm      = {
     dest       : { x : -1, y : -1 },
     formation  : 1,

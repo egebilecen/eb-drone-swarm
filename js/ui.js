@@ -20,7 +20,7 @@ function update_swarm_dest(e, log=true)
     drone_swarm.drone_list[0].pos.dest.x = destX;
     drone_swarm.drone_list[0].pos.dest.y = destY;
 
-    if(log) debug_log("Canvas onclick", "Swarm target position: ", drone_swarm.dest, angle_of_rad(drone_swarm.drone_list[0].pos, drone_swarm.dest), distance_of(drone_swarm.drone_list[0].pos, drone_swarm.dest));
+    if(log) debug_log("Canvas onclick", "Swarm target position: ", drone_swarm.dest);
 }
 
 $(() => {
@@ -57,6 +57,40 @@ $(() => {
         let drone = new Drone();
         drone.set_background_color(random_color());
 
+        switch (drone_swarm.formation) 
+        {
+            case DRONE_SWARM_FORMATION.none:
+            {
+            }
+            break;
+
+            case DRONE_SWARM_FORMATION.line:
+            {
+                if(drone_swarm.drone_list.length < 1) break;
+
+                const drone_spacing = 50;
+                let last_drone = drone_swarm.drone_list[drone_swarm.drone_list.length - 1];
+
+                drone.pos.y = last_drone.pos.y + drone_spacing;
+            }
+            break;
+
+            case DRONE_SWARM_FORMATION.v_shape:
+            {
+            }
+            break;
+
+            case DRONE_SWARM_FORMATION.perimeter:
+            {
+            }
+            break;
+
+            case DRONE_SWARM_FORMATION.circle:
+            {
+            }
+            break;
+        }
+
         drone_swarm.drone_list.push(drone);
         
         debug_log("Add Drone", "Added new drone!", drone);
@@ -69,31 +103,31 @@ $(() => {
 
         switch (formation_number) 
         {
-            case 0:
+            case DRONE_SWARM_FORMATION.none:
+            {
+                show_popup("Warning", "Formation is not yet implemented.", "warning");
+            }
+            break;
+
+            case DRONE_SWARM_FORMATION.line:
             {
                 set_formation = true;
             }
             break;
 
-            case 1:
+            case DRONE_SWARM_FORMATION.v_shape:
             {
                 show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
             break;
 
-            case 2:
+            case DRONE_SWARM_FORMATION.perimeter:
             {
                 show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
             break;
 
-            case 3:
-            {
-                show_popup("Warning", "Formation is not yet implemented.", "warning");
-            }
-            break;
-
-            case 4:
+            case DRONE_SWARM_FORMATION.circle:
             {
                 show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
