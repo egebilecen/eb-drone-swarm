@@ -14,7 +14,7 @@ $(() => {
     // EVENTS
     // Click on canvas
     $("canvas#main").on("click", (e) => {
-        if(drone_list.length < 1) return;
+        if(drone_swarm.drone_list.length < 1) return;
 
         drone_swarm.dest.x = e.pageX;
         drone_swarm.dest.y = e.pageY;
@@ -24,7 +24,7 @@ $(() => {
 
     // Add new drone to swarm
     $("#add-drone").on("click", () => {
-        if(drone_list.length >= MAX_DRONE_COUNT)
+        if(drone_swarm.drone_list.length >= MAX_DRONE_COUNT)
         {
             show_popup("Warning", "You cannot add more than <b>"+MAX_DRONE_COUNT+"</b> drone(s).")
             return;
@@ -33,7 +33,7 @@ $(() => {
         let drone = new Drone();
         drone.set_background_color(random_color());
 
-        drone_list.push(drone);
+        drone_swarm.drone_list.push(drone);
         
         debug_log("Add Drone", "Added new drone!", drone);
     });

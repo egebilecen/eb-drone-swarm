@@ -15,22 +15,22 @@ canvas.setAttribute("height", getComputedStyle(canvas).getPropertyValue("height"
 
 // Drone related
 const MAX_DRONE_COUNT  = 10;
-const drone_list       = [];
 let   drone_swarm      = {
-    dest      : { x : -1, y : -1 },
-    formation : 1
+    dest       : { x : -1, y : -1 },
+    formation  : 1,
+    drone_list : []
 };
 
 // Scene loop
 setInterval(() => {
-    if(drone_list.length < 1) return;
+    if(drone_swarm.drone_list.length < 1) return;
 
     clear_canvas(ctx);
 
     // draw everything in here
-    for(let i in drone_list)
+    for(let i in drone_swarm.drone_list)
     {
-        let drone = drone_list[i];
+        let drone = drone_swarm.drone_list[i];
         draw_drone(ctx, drone);
 
         if(drone.pos.dest.x != -1 || drone.pos.dest.y != -1)
