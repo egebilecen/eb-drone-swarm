@@ -18,7 +18,7 @@ function deg_to_rad(deg_val)
 
 function distance_of(pt1, pt2)
 {
-    return Math.sqrt(Math.pow(pt2.x - pt1.x, 2), Math.pow(pt2.y - pt1.y, 2));
+    return Math.sqrt(Math.pow(pt2.x - pt1.x, 2) + Math.pow(pt2.y - pt1.y, 2));
 }
 
 function compass_angle_of(pt1, pt2)
@@ -31,12 +31,17 @@ function compass_angle_of(pt1, pt2)
     return (map_value(deg, -180, 180, 0, 360) + 270) % 360;
 }
 
-function angle_of(pt1, pt2, deg_360=true)
+function angle_of_rad(pt1, pt2)
 {
     let deltaX = pt2.x - pt1.x;
     let deltaY = pt2.y - pt1.y;
-    
-    let deg    = rad_to_deg(Math.atan2(deltaY, deltaX));
+
+    return Math.atan2(deltaY, deltaX);
+}
+
+function angle_of(pt1, pt2, deg_360=true)
+{
+    let deg = rad_to_deg(angle_of_rad(pt1, pt2));
 
     if(deg_360) return map_value(deg, -180, 180, 0, 360);
 
