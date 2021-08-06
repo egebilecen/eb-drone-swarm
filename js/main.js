@@ -14,10 +14,13 @@ canvas.setAttribute("width",  getComputedStyle(canvas).getPropertyValue("width")
 canvas.setAttribute("height", getComputedStyle(canvas).getPropertyValue("height").slice(0, -2) * DPI);
 
 // Drone list
+const MAX_DRONE_COUNT = 10;
 const drone_list = [];
 
 // Scene loop
 setInterval(() => {
+    if(drone_list.length < 1) return;
+
     clear_canvas(ctx);
 
     // draw everything in here

@@ -19,6 +19,12 @@ $(() => {
 
     // Add new drone to swarm
     $("#add-drone").on("click", () => {
+        if(drone_list.length >= MAX_DRONE_COUNT)
+        {
+            show_popup("Warning", "You cannot add more than <b>"+MAX_DRONE_COUNT+"</b> drone(s).")
+            return;
+        }
+
         let drone = new Drone();
         drone.set_background_color(random_color());
 

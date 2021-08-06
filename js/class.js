@@ -17,7 +17,7 @@ class Drone
         this.spd = 5;
 
         // Appearance Variables
-        this.size        = 15;
+        this.size        = 12;
         this.border_size = 3;
         this.color = {
             background : "rgba(80, 00, 80, 1)",
