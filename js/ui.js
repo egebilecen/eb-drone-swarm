@@ -17,8 +17,40 @@ function update_swarm_dest(e, log=true)
     drone_swarm.dest.x = destX;
     drone_swarm.dest.y = destY;
 
-    drone_swarm.drone_list[0].pos.dest.x = destX;
-    drone_swarm.drone_list[0].pos.dest.y = destY;
+    switch (drone_swarm.formation) 
+    {
+        case DRONE_SWARM_FORMATION.none.id:
+        {
+        }
+        break;
+
+        case DRONE_SWARM_FORMATION.line.id:
+        {
+            for(let i in drone_swarm.drone_list)
+            {
+                let drone = drone_swarm.drone_list[i];
+
+                drone.pos.dest.x = destX;
+                drone.pos.dest.y = destY + (DRONE_SWARM_FORMATION.line.drone_spacing * i);
+            }
+        }
+        break;
+
+        case DRONE_SWARM_FORMATION.v_shape.id:
+        {
+        }
+        break;
+
+        case DRONE_SWARM_FORMATION.perimeter.id:
+        {
+        }
+        break;
+
+        case DRONE_SWARM_FORMATION.circle.id:
+        {
+        }
+        break;
+    }
 
     if(log) debug_log("Canvas onclick", "Swarm target position: ", drone_swarm.dest);
 }
@@ -59,33 +91,33 @@ $(() => {
 
         switch (drone_swarm.formation) 
         {
-            case DRONE_SWARM_FORMATION.none:
+            case DRONE_SWARM_FORMATION.none.id:
             {
             }
             break;
 
-            case DRONE_SWARM_FORMATION.line:
+            case DRONE_SWARM_FORMATION.line.id:
             {
                 if(drone_swarm.drone_list.length < 1) break;
 
-                const drone_spacing = 50;
                 let last_drone = drone_swarm.drone_list[drone_swarm.drone_list.length - 1];
 
-                drone.pos.y = last_drone.pos.y + drone_spacing;
+                drone.pos.x = last_drone.pos.x;
+                drone.pos.y = last_drone.pos.y + DRONE_SWARM_FORMATION.line.drone_spacing;
             }
             break;
 
-            case DRONE_SWARM_FORMATION.v_shape:
+            case DRONE_SWARM_FORMATION.v_shape.id:
             {
             }
             break;
 
-            case DRONE_SWARM_FORMATION.perimeter:
+            case DRONE_SWARM_FORMATION.perimeter.id:
             {
             }
             break;
 
-            case DRONE_SWARM_FORMATION.circle:
+            case DRONE_SWARM_FORMATION.circle.id:
             {
             }
             break;
@@ -98,36 +130,36 @@ $(() => {
 
     // Change swarm formation
     $("#swarm-formation").on("change", () => {
-        let formation_number = parseInt($("#swarm-formation").val());
-        let set_formation    = false;
+        let formation_id  = parseInt($("#swarm-formation").val());
+        let set_formation = false;
 
-        switch (formation_number) 
+        switch (formation_id) 
         {
-            case DRONE_SWARM_FORMATION.none:
+            case DRONE_SWARM_FORMATION.none.id:
             {
                 show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
             break;
 
-            case DRONE_SWARM_FORMATION.line:
+            case DRONE_SWARM_FORMATION.line.id:
             {
                 set_formation = true;
             }
             break;
 
-            case DRONE_SWARM_FORMATION.v_shape:
+            case DRONE_SWARM_FORMATION.v_shape.id:
             {
                 show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
             break;
 
-            case DRONE_SWARM_FORMATION.perimeter:
+            case DRONE_SWARM_FORMATION.perimeter.id:
             {
                 show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
             break;
 
-            case DRONE_SWARM_FORMATION.circle:
+            case DRONE_SWARM_FORMATION.circle.id:
             {
                 show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
@@ -140,7 +172,7 @@ $(() => {
             break;
         }
 
-        if(set_formation) drone_swarm.formation = formation_number;
+        if(set_formation) drone_swarm.formation = formation_id;
 
         debug_log("Set Formation", "Swarm formation: "+drone_swarm.formation);
     });
