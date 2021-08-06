@@ -52,10 +52,12 @@ class Drone
     {
         if(this.pos.dest.x != -1 && this.pos.dest.y != -1)
         {
+            // X
             if(this.pos.x <= this.pos.dest.x) this.pos.x += this.spd;
             else                              this.pos.x -= this.spd;
             if(Math.abs(this.pos.x - this.pos.dest.x) <= this.spd) this.pos.x = this.pos.dest.x;
 
+            // Y
             if(this.pos.y <= this.pos.dest.y) this.pos.y += this.spd;
             else                              this.pos.y -= this.spd;
             if(Math.abs(this.pos.y - this.pos.dest.y) <= this.spd) this.pos.y = this.pos.dest.y;
