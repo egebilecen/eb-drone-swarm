@@ -10,6 +10,11 @@ function draw_drone(ctx, drone)
     ctx.closePath();
 }
 
+function draw_drone_path_line(ctx, drone)
+{
+
+}
+
 function clear_canvas(ctx)
 {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
