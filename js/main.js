@@ -1,11 +1,12 @@
 'use strict';
 
-const FPS = 60;
+const FPS        = 60;
+const DPI        = window.devicePixelRatio;
+let   MOUSE_DOWN = false;
 
 // Canvas related
 const canvas = document.querySelector("canvas#main");
 const ctx    = canvas.getContext("2d");
-const DPI    = window.devicePixelRatio;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;

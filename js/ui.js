@@ -13,7 +13,16 @@ $(() => {
 
     // EVENTS
     // Click on canvas
-    $("canvas#main").on("click", (e) => {
+    $("canvas#main").on("mousedown", () => {
+        MOUSE_DOWN = true;
+    });
+
+    $("canvas#main").on("mouseup", () => {
+        MOUSE_DOWN = false;
+    });
+
+    $("canvas#main").on("mousemove", (e) => {
+        if(!MOUSE_DOWN) return;
         if(drone_swarm.drone_list.length < 1) return;
 
         let destX = e.pageX * DPI;
