@@ -8,11 +8,11 @@ class Drone
         this.id  = ++Drone.last_id;
         this.pos = {
             x : 250,
-            y : 250
-        };
-        this.vel = {
-            x : 0,
-            y : 0
+            y : 250,
+            dest : {
+                x : -1,
+                y : -1
+            }
         };
         this.spd = 5;
 
