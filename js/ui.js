@@ -14,7 +14,12 @@ $(() => {
     // EVENTS
     // Click on canvas
     $("canvas#main").on("click", (e) => {
-        console.log(e.pageX+","+e.pageY);
+        if(drone_list.length < 1) return;
+
+        drone_swarm.dest.x = e.pageX;
+        drone_swarm.dest.y = e.pageY;
+
+        debug_log("Canvas onclick", "Swarm target position: ", drone_swarm.dest);
     });
 
     // Add new drone to swarm
@@ -30,15 +35,22 @@ $(() => {
 
         drone_list.push(drone);
         
-        debug_log("Add Drone", "Added new drone!", drone_list);
+        debug_log("Add Drone", "Added new drone!", drone);
     });
 
     // Change swarm formation
     $("#swarm-formation").on("change", () => {
         let formation_number = parseInt($("#swarm-formation").val());
+        let set_formation    = false;
 
         switch (formation_number) 
         {
+            case 0:
+            {
+                set_formation = true;
+            }
+            break;
+
             case 1:
             {
                 show_popup("Warning", "Formation is not yet implemented.", "warning");
@@ -69,6 +81,10 @@ $(() => {
             }
             break;
         }
+
+        if(set_formation) drone_swarm.formation = formation_number;
+
+        debug_log("Set Formation", "Swarm formation: "+drone_swarm.formation);
     });
     
     $("#close-popup").on("click", () => {

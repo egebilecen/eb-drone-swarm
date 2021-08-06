@@ -12,7 +12,7 @@ function draw_drone(ctx, drone)
 
 function draw_drone_path_line(ctx, drone)
 {
-
+    
 }
 
 function clear_canvas(ctx)

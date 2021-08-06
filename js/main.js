@@ -13,9 +13,13 @@ canvas.height = window.innerHeight;
 canvas.setAttribute("width",  getComputedStyle(canvas).getPropertyValue("width").slice(0, -2)  * DPI);
 canvas.setAttribute("height", getComputedStyle(canvas).getPropertyValue("height").slice(0, -2) * DPI);
 
-// Drone list
-const MAX_DRONE_COUNT = 10;
-const drone_list = [];
+// Drone related
+const MAX_DRONE_COUNT  = 10;
+const drone_list       = [];
+let   drone_swarm      = {
+    dest      : { x : -1, y : -1 },
+    formation : 1
+};
 
 // Scene loop
 setInterval(() => {
