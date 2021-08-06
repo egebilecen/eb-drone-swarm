@@ -1,7 +1,8 @@
-function debug_log(title, msg, data=null)
+function debug_log(title, msg, data=null, data2=null)
 {
     console.log("["+title+"] - "+msg);
-    if(data !== null) console.log(data);
+    if(data  !== null) console.log(data);
+    if(data2 !== null) console.log(data2);
     console.log("-----");
 }
 

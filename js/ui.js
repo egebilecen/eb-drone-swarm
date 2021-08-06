@@ -7,7 +7,7 @@ function show_popup(title, text, type="dark")
     $("#alert-popup").fadeIn(200);
 }
 
-function update_swarm_dest(e)
+function update_swarm_dest(e, log=true)
 {
     if(drone_swarm.drone_list.length < 1) return;
 
@@ -20,7 +20,7 @@ function update_swarm_dest(e)
     drone_swarm.drone_list[0].pos.dest.x = destX;
     drone_swarm.drone_list[0].pos.dest.y = destY;
 
-    // debug_log("Canvas onclick", "Swarm target position: ", drone_swarm.dest);
+    if(log) debug_log("Canvas onclick", "Swarm target position: ", drone_swarm.dest, angle_of(drone_swarm.drone_list[0].pos, drone_swarm.dest));
 }
 
 $(() => {
@@ -39,7 +39,7 @@ $(() => {
 
     $("canvas#main").on("mousemove", (e) => {
         if(!MOUSE_DOWN) return;
-        update_swarm_dest(e);
+        update_swarm_dest(e, false);
     });
 
     $("canvas#main").on("click", (e) => {
