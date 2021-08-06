@@ -128,6 +128,13 @@ $(() => {
         debug_log("Add Drone", "Added new drone!", drone);
     });
 
+    // Delete drone
+    $("#delete-drone").on("click", () => {
+        if(drone_swarm.drone_list.length < 1) return;
+
+        drone_swarm.drone_list = drone_swarm.drone_list.slice(0, -1);
+    });
+
     // Change swarm formation
     $("#swarm-formation").on("change", () => {
         let formation_id  = parseInt($("#swarm-formation").val());

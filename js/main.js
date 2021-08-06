@@ -46,9 +46,9 @@ let   drone_swarm      = {
 
 // Scene loop
 setInterval(() => {
-    if(drone_swarm.drone_list.length < 1) return;
-
     clear_canvas(ctx);
+
+    if(drone_swarm.drone_list.length < 1) return;
 
     // draw everything in here
     for(let i in drone_swarm.drone_list)
