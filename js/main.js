@@ -36,6 +36,7 @@ setInterval(() => {
         if(drone.pos.dest.x != -1 || drone.pos.dest.y != -1)
             draw_drone_path_line(ctx, drone);
         
+        drone.update_pos();
         draw_drone(ctx, drone);
     }
 }, 1000 / FPS);

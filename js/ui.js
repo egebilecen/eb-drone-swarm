@@ -7,6 +7,22 @@ function show_popup(title, text, type="dark")
     $("#alert-popup").fadeIn(200);
 }
 
+function update_swarm_dest(e)
+{
+    if(drone_swarm.drone_list.length < 1) return;
+
+    let destX = parseInt(e.pageX * DPI);
+    let destY = parseInt(e.pageY * DPI);
+
+    drone_swarm.dest.x = destX;
+    drone_swarm.dest.y = destY;
+
+    drone_swarm.drone_list[0].pos.dest.x = destX;
+    drone_swarm.drone_list[0].pos.dest.y = destY;
+
+    // debug_log("Canvas onclick", "Swarm target position: ", drone_swarm.dest);
+}
+
 $(() => {
     // Initialize tooltips
     $("#swarm-formation").tooltip();
@@ -23,18 +39,11 @@ $(() => {
 
     $("canvas#main").on("mousemove", (e) => {
         if(!MOUSE_DOWN) return;
-        if(drone_swarm.drone_list.length < 1) return;
+        update_swarm_dest(e);
+    });
 
-        let destX = e.pageX * DPI;
-        let destY = e.pageY * DPI;
-
-        drone_swarm.dest.x = destX;
-        drone_swarm.dest.y = destY;
-
-        drone_swarm.drone_list[0].pos.dest.x = destX;
-        drone_swarm.drone_list[0].pos.dest.y = destY;
-
-        debug_log("Canvas onclick", "Swarm target position: ", drone_swarm.dest);
+    $("canvas#main").on("click", (e) => {
+        update_swarm_dest(e);
     });
 
     // Add new drone to swarm
