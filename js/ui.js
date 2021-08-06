@@ -4,7 +4,7 @@ function show_popup(title, text, type="dark")
     $("#alert-popup > * div.alert > h4").html(title);
     $("#alert-popup > * div.alert > p").html(text);
     $("#alert-popup").css("top", window.innerHeight / 2 - $("#alert-popup").css("height").replace("px", ""));
-    $("#alert-popup").fadeIn();
+    $("#alert-popup").fadeIn(200);
 }
 
 $(() => {
@@ -88,6 +88,11 @@ $(() => {
     });
     
     $("#close-popup").on("click", () => {
-        $("#alert-popup").fadeOut();
+        $("#alert-popup").fadeOut(200);
+    });
+
+    $("body").on("keydown", (e) => {
+        if(e.keyCode === 27 && $("#alert-popup").css("display") == "block") // ESC
+            $("#alert-popup").fadeOut(200);
     });
 });
