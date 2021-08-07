@@ -49,7 +49,7 @@ let last_formation = drone_swarm.formation;
 setInterval(() => {
     clear_canvas(ctx);
 
-    if(drone_swarm.drone_list.length < 1) return;
+    if(drone_swarm.drone_list.length < 1 && DEBUG_POINTS.length < 1) return;
 
     // draw everything in here
     for(let i in drone_swarm.drone_list)
