@@ -202,14 +202,18 @@ $(() => {
             case DRONE_SWARM_FORMATION.line.id:
             {
                 set_formation = true;
-                update_swarm_dest(drone_swarm.drone_list[0].pos.x, drone_swarm.drone_list[0].pos.y);
+
+                if(drone_swarm.drone_list.length > 0)
+                    update_swarm_dest(drone_swarm.drone_list[0].pos.x, drone_swarm.drone_list[0].pos.y);
             }
             break;
 
             case DRONE_SWARM_FORMATION.v_shape.id:
             {
                 set_formation = true;
-                update_swarm_dest(drone_swarm.drone_list[0].pos.x, drone_swarm.drone_list[0].pos.y);
+
+                if(drone_swarm.drone_list.length > 0)
+                    update_swarm_dest(drone_swarm.drone_list[0].pos.x, drone_swarm.drone_list[0].pos.y);
             }
             break;
 
