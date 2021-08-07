@@ -29,12 +29,8 @@ const DRONE_SWARM_FORMATION = {
         id : 2,
         drone_spacing : 50
     },
-    perimeter : {
-        id : 3,
-        drone_spacing : 50
-    },
     circle    : {
-        id : 4,
+        id : 3,
         drone_spacing : 50
     }
 };

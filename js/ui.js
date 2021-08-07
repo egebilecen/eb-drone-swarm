@@ -41,11 +41,6 @@ function update_swarm_dest(e, log=true)
         }
         break;
 
-        case DRONE_SWARM_FORMATION.perimeter.id:
-        {
-        }
-        break;
-
         case DRONE_SWARM_FORMATION.circle.id:
         {
         }
@@ -112,11 +107,6 @@ $(() => {
             }
             break;
 
-            case DRONE_SWARM_FORMATION.perimeter.id:
-            {
-            }
-            break;
-
             case DRONE_SWARM_FORMATION.circle.id:
             {
             }
@@ -155,12 +145,6 @@ $(() => {
             break;
 
             case DRONE_SWARM_FORMATION.v_shape.id:
-            {
-                show_popup("Warning", "Formation is not yet implemented.", "warning");
-            }
-            break;
-
-            case DRONE_SWARM_FORMATION.perimeter.id:
             {
                 show_popup("Warning", "Formation is not yet implemented.", "warning");
             }
