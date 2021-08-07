@@ -1,3 +1,8 @@
+function last_elem(arr)
+{
+    return arr[arr.length - 1];
+}
+
 function debug_log(title, msg, data=null, data2=null, data3=null)
 {
     console.log("["+title+"] - "+msg);
