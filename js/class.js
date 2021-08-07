@@ -7,8 +7,8 @@ class Drone
     {
         this.id  = ++Drone.last_id;
         this.pos = {
-            x : 250,
-            y : 250,
+            x : 0,
+            y : 0,
             dest : {
                 x : -1,
                 y : -1
@@ -58,7 +58,7 @@ class Drone
             this.pos.x += this.spd * Math.cos(heading);
             this.pos.y += this.spd * Math.sin(heading);
 
-            if(distance_of(this.pos, this.pos.dest) <= 3)
+            if(distance_of(this.pos, this.pos.dest) <= 2.5)
             {
                 this.pos.x = this.pos.dest.x;
                 this.pos.y = this.pos.dest.y;

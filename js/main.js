@@ -15,7 +15,7 @@ canvas.setAttribute("width",  getComputedStyle(canvas).getPropertyValue("width")
 canvas.setAttribute("height", getComputedStyle(canvas).getPropertyValue("height").slice(0, -2) * DPI);
 
 // Drone related
-const MAX_DRONE_COUNT  = 10;
+const MAX_DRONE_COUNT  = 11;
 const DRONE_SWARM_FORMATION = {
     none      : {
         id : 0,
@@ -27,7 +27,8 @@ const DRONE_SWARM_FORMATION = {
     },
     v_shape   : {
         id : 2,
-        drone_spacing : 50
+        drone_spacing : 50,
+        drone_angle   : 120
     },
     circle    : {
         id : 3,
@@ -36,7 +37,7 @@ const DRONE_SWARM_FORMATION = {
 };
 let   drone_swarm      = {
     dest       : { x : -1, y : -1 },
-    formation  : DRONE_SWARM_FORMATION.line.id,
+    formation  : DRONE_SWARM_FORMATION.v_shape.id,
     drone_list : []
 };
 
