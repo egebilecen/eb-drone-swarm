@@ -34,9 +34,13 @@ function update_swarm_dest(destX, destY)
             for(let i in drone_swarm.drone_list)
             {
                 let drone = drone_swarm.drone_list[i];
+                
+                if(!CTRL_DOWN) drone.pos.dest = [];
 
-                drone.pos.dest.x = destX;
-                drone.pos.dest.y = destY + (DRONE_SWARM_FORMATION.line.drone_spacing * i);
+                drone.pos.dest.push({
+                    x : destX, 
+                    y : destY + (DRONE_SWARM_FORMATION.line.drone_spacing * i) 
+                });
             }
         }
         break;
@@ -45,8 +49,13 @@ function update_swarm_dest(destX, destY)
         {
             let leader_drone = drone_swarm.drone_list[0];
 
-            leader_drone.pos.dest.x = drone_swarm.dest.x;
-            leader_drone.pos.dest.y = drone_swarm.dest.y;
+            if(!CTRL_DOWN) leader_drone.pos.dest = [];
+            let leader_dest = {};
+
+            leader_dest.x = drone_swarm.dest.x;
+            leader_dest.y = drone_swarm.dest.y;
+
+            leader_drone.pos.dest.push(leader_dest);
 
             if(drone_swarm.drone_list.length <= 1) break;
 
@@ -59,18 +68,23 @@ function update_swarm_dest(destX, destY)
                 let even_drone_count = parseInt(i / 2);
                 let odd_drone_count  = i - even_drone_count;
 
+                if(!CTRL_DOWN) drone.pos.dest = [];
+                let dest = {};
+
                 // even (placed to right side in formation)
                 if(drone.id % 2 == 0)
                 {
-                    drone.pos.dest.x = leader_drone.pos.dest.x - (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (even_drone_count + 1) * Math.cos(heading_even));
-                    drone.pos.dest.y = leader_drone.pos.dest.y - (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (even_drone_count + 1) * Math.sin(heading_even));
+                    dest.x = last_elem(leader_drone.pos.dest).x - (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (even_drone_count + 1) * Math.cos(heading_even));
+                    dest.y = last_elem(leader_drone.pos.dest).y - (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (even_drone_count + 1) * Math.sin(heading_even));
                 }
                 // odd (placed to right side in formation)
                 else
                 {
-                    drone.pos.dest.x = leader_drone.pos.dest.x + (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (odd_drone_count) * Math.cos(heading_odd));
-                    drone.pos.dest.y = leader_drone.pos.dest.y + (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (odd_drone_count) * Math.sin(heading_odd));
+                    dest.x = last_elem(leader_drone.pos.dest).x + (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (odd_drone_count) * Math.cos(heading_odd));
+                    dest.y = last_elem(leader_drone.pos.dest).y + (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (odd_drone_count) * Math.sin(heading_odd));
                 }
+
+                drone.pos.dest.push(dest);
             }
         }
         break;
@@ -90,8 +104,13 @@ function update_swarm_dest(destX, destY)
                 let drone   = drone_swarm.drone_list[i];
                 let heading = deg_to_rad(angle_per_drone * i);
 
-                drone.pos.dest.x = circle_center_point.x + (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.cos(heading));
-                drone.pos.dest.y = circle_center_point.y + (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.sin(heading));
+                if(!CTRL_DOWN) drone.pos.dest = [];
+                let dest = {};
+
+                dest.x = circle_center_point.x + (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.cos(heading));
+                dest.y = circle_center_point.y + (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.sin(heading));
+
+                drone.pos.dest.push(dest);
             }
         }
         break;
@@ -115,12 +134,51 @@ $(() => {
     });
 
     $("canvas#main").on("mousemove", (e) => {
-        if(!MOUSE_DOWN) return;
+        if(!MOUSE_DOWN || CTRL_DOWN) return;
         update_swarm_dest_click_event(e);
     });
 
     $("canvas#main").on("click", (e) => {
         update_swarm_dest_click_event(e);
+    });
+
+    $("body").on("keydown", (e) => {
+        // console.log(e.keyCode);
+
+        if(e.keyCode === 27 && $("#alert-popup").css("display") == "block") // ESC
+            $("#alert-popup").fadeOut(200);
+
+        if(e.keyCode == 49) // 1
+        {
+            $("#swarm-formation").val(0).change();
+            $("#swarm-formation").change();
+        }
+        
+        if(e.keyCode == 50) // 2
+        {
+            $("#swarm-formation").val(1).change();
+            $("#swarm-formation").change();
+        }
+
+        if(e.keyCode == 51) // 3
+        {
+            $("#swarm-formation").val(2).change();
+            $("#swarm-formation").change();
+        }
+
+        if(e.keyCode == 52) // 4
+        {
+            $("#swarm-formation").val(3).change();
+            $("#swarm-formation").change();
+        }
+
+        if(e.keyCode == 17) // CTRL
+            CTRL_DOWN = true;
+    });
+
+    $("body").on("keyup", (e) => {
+        if(e.keyCode == 17) // CTRL
+            CTRL_DOWN = false;
     });
 
     // Add new drone to swarm
@@ -184,6 +242,7 @@ $(() => {
 
             case DRONE_SWARM_FORMATION.circle.id:
             {
+                // spawns drones in circular angle
                 // let angle_per_drone = 360 / drone_swarm.drone_list.length;
                 // let circle_center_point = {
                 //     x : (drone_swarm.drone_list.length == 0 ? 
@@ -305,31 +364,11 @@ $(() => {
         $("#alert-popup").fadeOut(200);
     });
 
-    $("body").on("keydown", (e) => {
-        // console.log(e.keyCode);
-
-        if(e.keyCode === 27 && $("#alert-popup").css("display") == "block") // ESC
-            $("#alert-popup").fadeOut(200);
-
-        if(e.keyCode == 49) // 1
+    $("#clear-wp").on("click", () => {
+        for(let i in drone_swarm.drone_list)
         {
-            $("#swarm-formation").val(0).change();
-            $("#swarm-formation").change();
-        }
-        if(e.keyCode == 50) // 2
-        {
-            $("#swarm-formation").val(1).change();
-            $("#swarm-formation").change();
-        }
-        if(e.keyCode == 51) // 3
-        {
-            $("#swarm-formation").val(2).change();
-            $("#swarm-formation").change();
-        }
-        if(e.keyCode == 52) // 4
-        {
-            $("#swarm-formation").val(3).change();
-            $("#swarm-formation").change();
+            let drone = drone_swarm.drone_list[i];
+            drone.pos.dest = [];
         }
     });
 });

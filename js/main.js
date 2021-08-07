@@ -3,6 +3,7 @@
 const FPS        = 60;
 const DPI        = window.devicePixelRatio;
 let   MOUSE_DOWN = false;
+let   CTRL_DOWN  = false;
 
 // Canvas related
 const canvas = document.querySelector("canvas#main");
@@ -55,7 +56,7 @@ setInterval(() => {
     {
         let drone = drone_swarm.drone_list[i];
 
-        if(drone.pos.dest.x != -1 && drone.pos.dest.y != -1)
+        if(drone.pos.dest.length > 0)
             draw_drone_path_line(ctx, drone);
         
         drone.update_pos();
