@@ -14,6 +14,8 @@ canvas.height = window.innerHeight;
 canvas.setAttribute("width",  getComputedStyle(canvas).getPropertyValue("width").slice(0, -2)  * DPI);
 canvas.setAttribute("height", getComputedStyle(canvas).getPropertyValue("height").slice(0, -2) * DPI);
 
+const DEBUG_POINTS = [];
+
 // Drone related
 const MAX_DRONE_COUNT  = 11;
 const DRONE_SWARM_FORMATION = {
@@ -57,5 +59,16 @@ setInterval(() => {
         
         drone.update_pos();
         draw_drone(ctx, drone);
+
+        // draw debug points
+        for(i in DEBUG_POINTS)
+        {
+            let point = DEBUG_POINTS[i];
+
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 6, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "red";
+            ctx.fill();
+        }
     }
 }, 1000 / FPS);

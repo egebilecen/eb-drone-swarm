@@ -7,6 +7,11 @@ function debug_log(title, msg, data=null, data2=null, data3=null)
     console.log("-----");
 }
 
+function add_debug_point(x, y)
+{
+    DEBUG_POINTS.push({ x : x, y: y });
+}
+
 function random_int(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
