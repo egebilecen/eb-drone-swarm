@@ -229,7 +229,18 @@ $(() => {
     });
 
     $("body").on("keydown", (e) => {
+        // console.log(e.keyCode);
+
         if(e.keyCode === 27 && $("#alert-popup").css("display") == "block") // ESC
             $("#alert-popup").fadeOut(200);
+
+        if(e.keyCode == 49) // 1
+            $("#swarm-formation").val(0).change();
+        if(e.keyCode == 50) // 2
+            $("#swarm-formation").val(1).change();
+        if(e.keyCode == 51) // 3
+            $("#swarm-formation").val(2).change();
+        if(e.keyCode == 52) // 4
+            $("#swarm-formation").val(3).change();
     });
 });
