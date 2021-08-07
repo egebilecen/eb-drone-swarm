@@ -104,8 +104,13 @@ function update_swarm_dest(destX, destY)
                 let drone   = drone_swarm.drone_list[i];
                 let heading = deg_to_rad(angle_per_drone * i);
 
-                drone.pos.dest.x = circle_center_point.x + (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.cos(heading));
-                drone.pos.dest.y = circle_center_point.y + (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.sin(heading));
+                if(!CTRL_DOWN) drone.pos.dest = [];
+                let dest = {};
+
+                dest.x = circle_center_point.x + (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.cos(heading));
+                dest.y = circle_center_point.y + (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.sin(heading));
+
+                drone.pos.dest.push(dest);
             }
         }
         break;
