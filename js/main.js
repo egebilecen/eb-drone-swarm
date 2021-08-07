@@ -1,9 +1,20 @@
 'use strict';
 
 const FPS        = 60;
-const DPI        = window.devicePixelRatio;
+let   DPI        = window.devicePixelRatio;
 let   MOUSE_DOWN = false;
 let   CTRL_DOWN  = false;
+
+function fix_canvas_blur(canvas)
+{
+    DPI = window.devicePixelRatio;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    canvas.setAttribute("width",  getComputedStyle(canvas).getPropertyValue("width").slice(0, -2)  * DPI);
+    canvas.setAttribute("height", getComputedStyle(canvas).getPropertyValue("height").slice(0, -2) * DPI);
+}
 
 // Canvas related
 const canvas = document.querySelector("canvas#main");
@@ -12,8 +23,7 @@ const ctx    = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-canvas.setAttribute("width",  getComputedStyle(canvas).getPropertyValue("width").slice(0, -2)  * DPI);
-canvas.setAttribute("height", getComputedStyle(canvas).getPropertyValue("height").slice(0, -2) * DPI);
+fix_canvas_blur(canvas);
 
 const DEBUG_POINTS = [];
 

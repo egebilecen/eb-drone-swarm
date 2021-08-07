@@ -123,7 +123,11 @@ $(() => {
     // Initialize tooltips
     $("#swarm-formation").tooltip();
 
-    // EVENTS
+    // windows resize
+    $(window).on('resize', function(){
+        fix_canvas_blur(canvas);
+    });
+    
     // Click on canvas
     $("canvas#main").on("mousedown", () => {
         MOUSE_DOWN = true;
