@@ -118,6 +118,10 @@ $(() => {
         let drone = new Drone();
         drone.set_background_color(random_color());
 
+        // default spawn location is center of the screen
+        drone.pos.x = ((window.innerWidth  / 2) * DPI) - (drone.size / 2);
+        drone.pos.y = ((window.innerHeight / 2) * DPI) - (drone.size / 2);
+
         switch (drone_swarm.formation) 
         {
             case DRONE_SWARM_FORMATION.none.id:
@@ -164,14 +168,22 @@ $(() => {
 
             case DRONE_SWARM_FORMATION.circle.id:
             {
+                if(drone_swarm.drone_list.length <= 3) break;
+
+                let angle_per_drone = 360 / drone_swarm.drone_list.length;
+                let circle_center_point = {
+                    x : (drone_swarm.drone_list.length == 0 ? 
+                            drone.pos.x : drone_swarm.drone_list[0].pos.x - (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.cos(0))),
+                    y : (drone_swarm.drone_list.length == 0 ? 
+                            drone.pos.y : drone_swarm.drone_list[0].pos.y - (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.sin(0)))
+                };
+
+                let heading = deg_to_rad(angle_per_drone * drone_swarm.drone_list.length);
+
+                drone.pos.x = circle_center_point.x + (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.cos(heading));
+                drone.pos.y = circle_center_point.y + (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.sin(heading));
             }
             break;
-        }
-
-        if(drone.pos.x == 0 && drone.pos.y == 0)
-        {
-            drone.pos.x = ((window.innerWidth  / 2) * DPI) - (drone.size / 2);
-            drone.pos.y = ((window.innerHeight / 2) * DPI) - (drone.size / 2);
         }
 
         drone_swarm.drone_list.push(drone);
@@ -219,7 +231,13 @@ $(() => {
 
             case DRONE_SWARM_FORMATION.circle.id:
             {
-                show_popup("Warning", "Formation is not yet implemented.", "warning");
+                if(drone_swarm.drone_list.length <= 3)
+                {
+                    show_popup("Warning", "Circle formation need at least 4 drones.", "warning");
+                    break;
+                }
+
+                set_formation = true;
             }
             break;
         

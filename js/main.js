@@ -32,12 +32,12 @@ const DRONE_SWARM_FORMATION = {
     },
     circle    : {
         id : 3,
-        drone_spacing : 50
+        drone_spacing : 100
     }
 };
 let   drone_swarm      = {
     dest       : { x : -1, y : -1 },
-    formation  : DRONE_SWARM_FORMATION.v_shape.id,
+    formation  : DRONE_SWARM_FORMATION.line.id,
     drone_list : []
 };
 
