@@ -230,14 +230,15 @@ $(() => {
 
     // Change swarm formation
     $("#swarm-formation").on("change", () => {
-        let formation_id  = parseInt($("#swarm-formation").val());
-        let set_formation = false;
+        let formation_id = parseInt($("#swarm-formation").val());
+        let revert_selection = false;
 
         switch (formation_id) 
         {
             case DRONE_SWARM_FORMATION.none.id:
             {
                 show_popup("Warning", "Formation is not yet implemented.", "warning");
+                revert_selection = true;
             }
             break;
 
@@ -264,6 +265,7 @@ $(() => {
                 if(drone_swarm.drone_list.length <= 3)
                 {
                     show_popup("Warning", "Circle formation need at least 4 drones.", "warning");
+                    revert_selection = true;
                     break;
                 }
 
@@ -282,9 +284,19 @@ $(() => {
             default:
             {
                 show_popup("Error", "Unknown formation.", "danger");
+                revert_selection = true;
             }
             break;
         }
+
+        if(revert_selection)
+        {
+            $("#swarm-formation").val(last_formation).change();
+            $("#swarm-formation").change();
+            return;
+        }
+
+        last_formation = formation_id;
 
         // debug_log("Set Formation", "Swarm formation: "+drone_swarm.formation);
     });

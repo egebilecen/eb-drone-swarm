@@ -37,11 +37,12 @@ const DRONE_SWARM_FORMATION = {
         drone_spacing : 100
     }
 };
-let   drone_swarm      = {
+let drone_swarm = {
     dest       : { x : -1, y : -1 },
     formation  : DRONE_SWARM_FORMATION.line.id,
     drone_list : []
 };
+let last_formation = drone_swarm.formation;
 
 // Scene loop
 setInterval(() => {
