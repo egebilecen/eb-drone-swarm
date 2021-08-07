@@ -38,6 +38,9 @@ function draw_drone_path_line(ctx, drone)
         ctx.strokeStyle = drone.color.border;
         ctx.stroke();
         ctx.closePath();
+
+        ctx.font = "16px Arial";
+        ctx.fillText(i + 1, dest.x - 20, dest.y - 10);
     }
 }
 
