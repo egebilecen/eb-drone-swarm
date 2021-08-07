@@ -34,9 +34,13 @@ function update_swarm_dest(destX, destY)
             for(let i in drone_swarm.drone_list)
             {
                 let drone = drone_swarm.drone_list[i];
+                
+                if(!CTRL_DOWN) drone.pos.dest = [];
 
-                drone.pos.dest.x = destX;
-                drone.pos.dest.y = destY + (DRONE_SWARM_FORMATION.line.drone_spacing * i);
+                drone.pos.dest.push({
+                    x : destX, 
+                    y : destY + (DRONE_SWARM_FORMATION.line.drone_spacing * i) 
+                });
             }
         }
         break;
@@ -123,6 +127,45 @@ $(() => {
         update_swarm_dest_click_event(e);
     });
 
+    $("body").on("keydown", (e) => {
+        // console.log(e.keyCode);
+
+        if(e.keyCode === 27 && $("#alert-popup").css("display") == "block") // ESC
+            $("#alert-popup").fadeOut(200);
+
+        if(e.keyCode == 49) // 1
+        {
+            $("#swarm-formation").val(0).change();
+            $("#swarm-formation").change();
+        }
+        
+        if(e.keyCode == 50) // 2
+        {
+            $("#swarm-formation").val(1).change();
+            $("#swarm-formation").change();
+        }
+
+        if(e.keyCode == 51) // 3
+        {
+            $("#swarm-formation").val(2).change();
+            $("#swarm-formation").change();
+        }
+
+        if(e.keyCode == 52) // 4
+        {
+            $("#swarm-formation").val(3).change();
+            $("#swarm-formation").change();
+        }
+
+        if(e.keyCode == 17) // CTRL
+            CTRL_DOWN = true;
+    });
+
+    $("body").on("keyup", (e) => {
+        if(e.keyCode == 17) // CTRL
+            CTRL_DOWN = false;
+    });
+
     // Add new drone to swarm
     $("#add-drone").on("click", () => {
         if(drone_swarm.drone_list.length >= MAX_DRONE_COUNT)
@@ -184,6 +227,7 @@ $(() => {
 
             case DRONE_SWARM_FORMATION.circle.id:
             {
+                // spawns drones in circular angle
                 // let angle_per_drone = 360 / drone_swarm.drone_list.length;
                 // let circle_center_point = {
                 //     x : (drone_swarm.drone_list.length == 0 ? 
@@ -305,31 +349,11 @@ $(() => {
         $("#alert-popup").fadeOut(200);
     });
 
-    $("body").on("keydown", (e) => {
-        // console.log(e.keyCode);
-
-        if(e.keyCode === 27 && $("#alert-popup").css("display") == "block") // ESC
-            $("#alert-popup").fadeOut(200);
-
-        if(e.keyCode == 49) // 1
+    $("#clear-wp").on("click", () => {
+        for(let i in drone_swarm.drone_list)
         {
-            $("#swarm-formation").val(0).change();
-            $("#swarm-formation").change();
-        }
-        if(e.keyCode == 50) // 2
-        {
-            $("#swarm-formation").val(1).change();
-            $("#swarm-formation").change();
-        }
-        if(e.keyCode == 51) // 3
-        {
-            $("#swarm-formation").val(2).change();
-            $("#swarm-formation").change();
-        }
-        if(e.keyCode == 52) // 4
-        {
-            $("#swarm-formation").val(3).change();
-            $("#swarm-formation").change();
+            let drone = drone_swarm.drone_list[i];
+            drone.pos.dest = [];
         }
     });
 });

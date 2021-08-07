@@ -9,10 +9,7 @@ class Drone
         this.pos = {
             x : 0,
             y : 0,
-            dest : {
-                x : -1,
-                y : -1
-            }
+            dest : []
         };
         this.spd = 5;
 
@@ -50,21 +47,24 @@ class Drone
 
     update_pos()
     {
-        if(this.pos.dest.x != -1 && this.pos.dest.y != -1
-        && (this.pos.x != this.pos.dest.x || this.pos.y != this.pos.dest.y))
+        if(this.pos.dest.length > 0)
         {
-            let heading = angle_of_rad(this.pos, this.pos.dest);
+            let dest    = this.pos.dest[0];
+            let heading = angle_of_rad(this.pos, dest);
 
-            if(distance_of(this.pos, this.pos.dest) <= 2.5)
+            if(distance_of(this.pos, dest) <= 2.5)
             {
-                this.pos.x = this.pos.dest.x;
-                this.pos.y = this.pos.dest.y;
+                this.pos.x = dest.x;
+                this.pos.y = dest.y;
             }
             else
             {
                 this.pos.x += this.spd * Math.cos(heading);
                 this.pos.y += this.spd * Math.sin(heading);
             }
+
+            if(this.pos.x == dest.x && this.pos.y == dest.y) 
+                this.pos.dest = this.pos.dest.slice(1);
         }
     }
 }
