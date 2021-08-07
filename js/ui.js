@@ -7,12 +7,17 @@ function show_popup(title, text, type="dark")
     $("#alert-popup").fadeIn(200);
 }
 
-function update_swarm_dest(e, log=true)
+function update_swarm_dest_click_event(e)
 {
-    if(drone_swarm.drone_list.length < 1) return;
-
     let destX = parseInt(e.pageX * DPI);
     let destY = parseInt(e.pageY * DPI);
+
+    update_swarm_dest(destX, destY);
+}
+
+function update_swarm_dest(destX, destY)
+{
+    if(drone_swarm.drone_list.length < 1) return;
 
     drone_swarm.dest.x = destX;
     drone_swarm.dest.y = destY;
@@ -95,11 +100,11 @@ $(() => {
 
     $("canvas#main").on("mousemove", (e) => {
         if(!MOUSE_DOWN) return;
-        update_swarm_dest(e, false);
+        update_swarm_dest_click_event(e);
     });
 
     $("canvas#main").on("click", (e) => {
-        update_swarm_dest(e);
+        update_swarm_dest_click_event(e);
     });
 
     // Add new drone to swarm
@@ -197,12 +202,14 @@ $(() => {
             case DRONE_SWARM_FORMATION.line.id:
             {
                 set_formation = true;
+                update_swarm_dest(drone_swarm.drone_list[0].pos.x, drone_swarm.drone_list[0].pos.y);
             }
             break;
 
             case DRONE_SWARM_FORMATION.v_shape.id:
             {
                 set_formation = true;
+                update_swarm_dest(drone_swarm.drone_list[0].pos.x, drone_swarm.drone_list[0].pos.y);
             }
             break;
 
@@ -221,7 +228,7 @@ $(() => {
 
         if(set_formation) drone_swarm.formation = formation_id;
 
-        debug_log("Set Formation", "Swarm formation: "+drone_swarm.formation);
+        // debug_log("Set Formation", "Swarm formation: "+drone_swarm.formation);
     });
     
     $("#close-popup").on("click", () => {
@@ -235,12 +242,24 @@ $(() => {
             $("#alert-popup").fadeOut(200);
 
         if(e.keyCode == 49) // 1
+        {
             $("#swarm-formation").val(0).change();
+            $("#swarm-formation").change();
+        }
         if(e.keyCode == 50) // 2
+        {
             $("#swarm-formation").val(1).change();
+            $("#swarm-formation").change();
+        }
         if(e.keyCode == 51) // 3
+        {
             $("#swarm-formation").val(2).change();
+            $("#swarm-formation").change();
+        }
         if(e.keyCode == 52) // 4
+        {
             $("#swarm-formation").val(3).change();
+            $("#swarm-formation").change();
+        }
     });
 });
