@@ -60,16 +60,16 @@ setInterval(() => {
         
         drone.update_pos();
         draw_drone(ctx, drone);
+    }
 
-        // draw debug points
-        for(i in DEBUG_POINTS)
-        {
-            let point = DEBUG_POINTS[i];
+    // draw debug points
+    for(let i in DEBUG_POINTS)
+    {
+        let point = DEBUG_POINTS[i];
 
-            ctx.beginPath();
-            ctx.arc(point.x, point.y, 6, 0, 2 * Math.PI, false);
-            ctx.fillStyle = "red";
-            ctx.fill();
-        }
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 6, 0, 2 * Math.PI, false);
+        ctx.fillStyle = "red";
+        ctx.fill();
     }
 }, 1000 / FPS);
