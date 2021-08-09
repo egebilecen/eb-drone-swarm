@@ -42,6 +42,7 @@ function draw_drone_path_line(ctx, drone)
         if(drone.pos.dest.length > 1)
         {
             ctx.font = "16px Arial";
+            ctx.fillStyle = "white";
             ctx.fillText(i + 1, dest.x - 20, dest.y - 10);
         }
     }
