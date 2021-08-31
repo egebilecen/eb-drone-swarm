@@ -32,7 +32,7 @@ const MAX_DRONE_COUNT  = 11;
 const DRONE_SWARM_FORMATION = {
     none      : {
         id : 0,
-        drone_spacing : 50
+        drone_spacing : 0
     },
     line      : {
         id : 1,

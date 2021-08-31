@@ -24,11 +24,6 @@ function update_swarm_dest(destX, destY)
 
     switch (drone_swarm.formation) 
     {
-        case DRONE_SWARM_FORMATION.none.id:
-        {
-        }
-        break;
-
         case DRONE_SWARM_FORMATION.line.id:
         {
             for(let i in drone_swarm.drone_list)
@@ -202,11 +197,6 @@ $(() => {
 
         switch (drone_swarm.formation) 
         {
-            case DRONE_SWARM_FORMATION.none.id:
-            {
-            }
-            break;
-
             case DRONE_SWARM_FORMATION.line.id:
             {
                 if(drone_swarm.drone_list.length < 1) break;
@@ -298,13 +288,6 @@ $(() => {
 
         switch (formation_id) 
         {
-            case DRONE_SWARM_FORMATION.none.id:
-            {
-                show_popup("Warning", "Formation is not yet implemented.", "warning");
-                revert_selection = true;
-            }
-            break;
-
             case DRONE_SWARM_FORMATION.line.id:
             {
                 drone_swarm.formation = formation_id;
