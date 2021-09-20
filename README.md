@@ -1,11 +1,6 @@
 # 2D Drone Swarm Simulation
-(Each circle represents a drone.)
-
 <b>How do drones position themselves in the swarm?</b><br>
 TODO
-
-Note:<br>
-All drone position calculations are done in <b>events.js</b>.
 
 <b>Supported formations:</b>
 * Line
@@ -23,5 +18,6 @@ Demonstration of waypoints. (Small numbers on waypoint points are indicates the 
 ![Screenshot_3](https://user-images.githubusercontent.com/29331682/129492463-2400b45b-63f6-49c2-944b-d0ef84a72a2b.png)
 
 # Future Plans
-<b>New Formations:</b>
-* Spread
+* New formation(s).
+  * Spread
+* New pathfinding method(s).
