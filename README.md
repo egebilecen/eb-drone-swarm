@@ -8,6 +8,7 @@ TODO
 * Circle
 
 <b>Preview:</b><br>
+(TODO: Add demonstration gif)
 Swarm is going to specified destination in Line formation.
 ![Screenshot_1](https://user-images.githubusercontent.com/29331682/129492462-c9ac8f8a-16d5-4722-a4f5-83647d09a2be.png)
 
