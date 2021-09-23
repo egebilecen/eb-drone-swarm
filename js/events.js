@@ -386,7 +386,6 @@ $(() => {
 
         let spacing_val = parseInt($("#swarm-spacing").val());
 
-        
         if(spacing_val < 50)
         {
             $("#swarm-spacing").val(drone_swarm.formation.drone_spacing);
