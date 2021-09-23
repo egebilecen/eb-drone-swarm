@@ -7,9 +7,17 @@ function show_popup(title, text, type="dark")
     $("#alert-popup").fadeIn(200);
 }
 
-function find_path(drone, dest)
+function find_path(drone_index, dest, path_finding_method=PATH_FINDING_METHOD.simple)
 {
-    
+    let drone = drone_swarm.drone_list[drone_index];
+    console.log(drone);
+
+    switch(path_finding_method)
+    {
+        case PATH_FINDING_METHOD.simple:
+            
+        break;
+    }
 }
 
 function update_swarm_dest_click_event(e)
