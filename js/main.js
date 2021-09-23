@@ -4,6 +4,7 @@ const FPS        = 60;
 let   DPI        = window.devicePixelRatio;
 let   MOUSE_DOWN = false;
 let   CTRL_DOWN  = false;
+let   PREVENT_FORMATION_CHANGE_VIA_KEYS = false;
 
 function fix_canvas_blur(canvas)
 {
@@ -55,11 +56,12 @@ const PATH_FINDING_METHOD = {
 
 let drone_swarm = {
     dest       : { x : -1, y : -1 },
-    formation  : DRONE_SWARM_FORMATION.line.id,
+    formation  : DRONE_SWARM_FORMATION.line,
     drone_list : []
 };
 
-let last_formation = drone_swarm.formation;
+let last_formation     = drone_swarm.formation;
+let last_drone_spacing = DRONE_SWARM_FORMATION.line.drone_spacing;
 
 // Scene loop
 setInterval(() => {

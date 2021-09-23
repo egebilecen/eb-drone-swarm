@@ -35,7 +35,7 @@ function update_swarm_dest(destX, destY)
     drone_swarm.dest.x = destX;
     drone_swarm.dest.y = destY;
 
-    switch (drone_swarm.formation) 
+    switch (drone_swarm.formation.id) 
     {
         case DRONE_SWARM_FORMATION.line.id:
         {
@@ -132,6 +132,10 @@ function update_swarm_dest(destX, destY)
 $(() => {
     // Initialize tooltips
     $("#swarm-formation").tooltip();
+    $("#swarm-spacing").tooltip();
+
+    // Initial input values
+    $("#swarm-spacing").val(drone_swarm.formation.drone_spacing);
 
     // windows resize
     $(window).on('resize', function(){
@@ -157,27 +161,41 @@ $(() => {
     });
 
     $("body").on("keydown", (e) => {
-        // console.log(e.keyCode);
+        // console.log(e);
 
         if(e.keyCode === 27 && $("#alert-popup").css("display") == "block") // ESC
+        {
             $("#alert-popup").fadeOut(200);
+            return;
+        }
+
+        if(e.target.localName == "input"
+        && (e.keyCode == 27      // ESC
+            || e.keyCode == 13)) // ENTER
+        {
+            $(e.target).blur();
+            return;
+        }
         
-        if(e.keyCode == 49) // 1
+        if(!PREVENT_FORMATION_CHANGE_VIA_KEYS)
         {
-            $("#swarm-formation").val(1).change();
-            $("#swarm-formation").change();
-        }
+            if(e.keyCode == 49) // 1
+            {
+                $("#swarm-formation").val(1).change();
+                $("#swarm-formation").change();
+            }
 
-        if(e.keyCode == 50) // 2
-        {
-            $("#swarm-formation").val(2).change();
-            $("#swarm-formation").change();
-        }
+            if(e.keyCode == 50) // 2
+            {
+                $("#swarm-formation").val(2).change();
+                $("#swarm-formation").change();
+            }
 
-        if(e.keyCode == 51) // 3
-        {
-            $("#swarm-formation").val(3).change();
-            $("#swarm-formation").change();
+            if(e.keyCode == 51) // 3
+            {
+                $("#swarm-formation").val(3).change();
+                $("#swarm-formation").change();
+            }
         }
 
         if(e.keyCode == 17) // CTRL
@@ -204,7 +222,7 @@ $(() => {
         drone.pos.x = ((window.innerWidth  / 2) * DPI) - (drone.size / 2);
         drone.pos.y = ((window.innerHeight / 2) * DPI) - (drone.size / 2);
 
-        switch (drone_swarm.formation) 
+        switch (drone_swarm.formation.id) 
         {
             case DRONE_SWARM_FORMATION.line.id:
             {
@@ -264,7 +282,7 @@ $(() => {
 
         drone_swarm.drone_list.push(drone);
 
-        if(drone_swarm.formation == DRONE_SWARM_FORMATION.circle.id)
+        if(drone_swarm.formation.id == DRONE_SWARM_FORMATION.circle.id)
         {
             update_swarm_dest(
                 drone_swarm.drone_list[0].pos.x - (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.cos(0)),
@@ -281,7 +299,7 @@ $(() => {
 
         drone_swarm.drone_list = drone_swarm.drone_list.slice(0, -1);
 
-        if(drone_swarm.formation == DRONE_SWARM_FORMATION.circle.id)
+        if(drone_swarm.formation.id == DRONE_SWARM_FORMATION.circle.id)
         {
             update_swarm_dest(
                 drone_swarm.drone_list[0].pos.x - (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.cos(0)),
@@ -299,7 +317,8 @@ $(() => {
         {
             case DRONE_SWARM_FORMATION.line.id:
             {
-                drone_swarm.formation = formation_id;
+                drone_swarm.formation = DRONE_SWARM_FORMATION.line;
+                $("#swarm-spacing").val(DRONE_SWARM_FORMATION.line.drone_spacing);
 
                 if(drone_swarm.drone_list.length > 0)
                     update_swarm_dest(drone_swarm.drone_list[0].pos.x, drone_swarm.drone_list[0].pos.y);
@@ -308,7 +327,8 @@ $(() => {
 
             case DRONE_SWARM_FORMATION.v_shape.id:
             {
-                drone_swarm.formation = formation_id;
+                drone_swarm.formation = DRONE_SWARM_FORMATION.v_shape;
+                $("#swarm-spacing").val(DRONE_SWARM_FORMATION.v_shape.drone_spacing);
 
                 if(drone_swarm.drone_list.length > 0)
                     update_swarm_dest(drone_swarm.drone_list[0].pos.x, drone_swarm.drone_list[0].pos.y);
@@ -324,7 +344,8 @@ $(() => {
                 //     break;
                 // }
 
-                drone_swarm.formation = formation_id;
+                drone_swarm.formation = DRONE_SWARM_FORMATION.circle;
+                $("#swarm-spacing").val(DRONE_SWARM_FORMATION.circle.drone_spacing);
 
                 if(drone_swarm.drone_list.length > 0)
                 {
@@ -350,10 +371,40 @@ $(() => {
             $("#swarm-formation").change();
             return;
         }
-
+        
         last_formation = formation_id;
 
-        // debug_log("Set Formation", "Swarm formation: "+drone_swarm.formation);
+        // debug_log("Set Formation", "Swarm formation: "+drone_swarm.formation.id);
+    });
+
+    $("#swarm-spacing").on("focus", () => {
+        PREVENT_FORMATION_CHANGE_VIA_KEYS = true;
+    });
+
+    $("#swarm-spacing").on("blur", () => {
+        PREVENT_FORMATION_CHANGE_VIA_KEYS = false;
+
+        let spacing_val = parseInt($("#swarm-spacing").val());
+
+        
+        if(spacing_val < 50)
+        {
+            $("#swarm-spacing").val(drone_swarm.formation.drone_spacing);
+            show_popup("Warning", "Swarm drone spacing value must be bigger than 50.", "warning");
+            return;
+        }
+        else if(!isNaN(spacing_val))
+        {
+            drone_swarm.formation.drone_spacing = spacing_val;
+            update_swarm_dest(drone_swarm.dest.x, drone_swarm.dest.y);
+            return;
+        }
+        else
+        {
+            $("#swarm-spacing").val(drone_swarm.formation.drone_spacing);
+            show_popup("Error", "Swarm drone spacing value must be an integer.", "danger");
+            return;
+        }
     });
     
     $("#close-popup").on("click", () => {

@@ -47,6 +47,13 @@ div#top-right-btn-bar > ul > li:last-child{
     width: 125px;
 }
 
+#swarm-spacing{
+    position: absolute;
+    left: 150px;
+    top:8px;
+    width: 60px;
+}
+
 #alert-popup{
     position: absolute;
     top: 0;
