@@ -5,6 +5,7 @@ let   DPI        = window.devicePixelRatio;
 let   MOUSE_DOWN = false;
 let   CTRL_DOWN  = false;
 let   PREVENT_FORMATION_CHANGE_VIA_KEYS = false;
+let   DISPLAY_DRONE_SPACE = false;
 
 function fix_canvas_blur(canvas)
 {
@@ -37,11 +38,11 @@ const DRONE_SWARM_FORMATION = {
     },
     line      : {
         id : 1,
-        drone_spacing : 50
+        drone_spacing : 100
     },
     v_shape   : {
         id : 2,
-        drone_spacing : 50,
+        drone_spacing : 100,
         drone_angle   : 120
     },
     circle    : {

@@ -54,6 +54,14 @@ div#top-right-btn-bar > ul > li:last-child{
     width: 60px;
 }
 
+#display-drone-space{
+    position: absolute;
+    left: 220px;
+    top:20px;
+    width: 15px;
+    height: 15px;
+}
+
 #alert-popup{
     position: absolute;
     top: 0;

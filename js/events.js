@@ -10,7 +10,7 @@ function show_popup(title, text, type="dark")
 function find_path(drone_index, dest, path_finding_method=PATH_FINDING_METHOD.simple)
 {
     let drone = drone_swarm.drone_list[drone_index];
-    console.log(drone);
+    // console.log(drone);
 
     switch(path_finding_method)
     {
@@ -49,6 +49,8 @@ function update_swarm_dest(destX, destY)
                     x : destX,
                     y : destY + (DRONE_SWARM_FORMATION.line.drone_spacing * i) 
                 }
+
+                find_path(i, dest);
 
                 drone.pos.dest.push(dest);
             }
@@ -133,6 +135,7 @@ $(() => {
     // Initialize tooltips
     $("#swarm-formation").tooltip();
     $("#swarm-spacing").tooltip();
+    $("#display-drone-space").tooltip();
 
     // Initial input values
     $("#swarm-spacing").val(drone_swarm.formation.drone_spacing);
@@ -404,6 +407,10 @@ $(() => {
             show_popup("Error", "Swarm drone spacing value must be an integer.", "danger");
             return;
         }
+    });
+
+    $("#display-drone-space").on("click", () => {
+        DISPLAY_DRONE_SPACE = $("#display-drone-space").prop("checked");
     });
     
     $("#close-popup").on("click", () => {

@@ -4,11 +4,22 @@ function draw_drone(ctx, drone)
     ctx.arc(drone.pos.x, drone.pos.y, drone.size, 0, 2 * Math.PI, false);
     ctx.fillStyle = drone.color.background;
     ctx.fill();
-    
+
     ctx.lineWidth = drone.border_size;
     ctx.strokeStyle = drone.color.border;
     ctx.stroke();
     ctx.closePath();
+    
+    // Display spacing circle
+    if(DISPLAY_DRONE_SPACE)
+    {
+        ctx.beginPath();
+        ctx.setLineDash([12, 12]);
+        ctx.arc(drone.pos.x, drone.pos.y, drone_swarm.formation.drone_spacing / 2, 0, 2 * Math.PI, false);
+        ctx.stroke();
+        ctx.setLineDash([0, 0]);
+        ctx.closePath();
+    }
 }
 
 function draw_drone_path_line(ctx, drone)
