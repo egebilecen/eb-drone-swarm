@@ -1,4 +1,4 @@
-# 2D Drone Swarm Simulation
+# 2D Drone Swarm Demonstration
 <b>How do drones position themselves in the swarm?</b><br>
 TODO
 
