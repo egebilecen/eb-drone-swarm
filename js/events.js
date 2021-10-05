@@ -7,17 +7,40 @@ function show_popup(title, text, type="dark")
     $("#alert-popup").fadeIn(200);
 }
 
-function find_path(drone_index, dest, path_finding_method=PATH_FINDING_METHOD.simple)
+function find_path(path_finding_method=PATH_FINDING_METHOD.simple)
 {
-    let drone = drone_swarm.drone_list[drone_index];
-    // console.log(drone);
-
     switch(path_finding_method)
     {
         case PATH_FINDING_METHOD.simple:
-            
+            for(let i=(drone_swarm.drone_list.length - 1); i >= 0; i--)
+            {
+                let drone     = drone_swarm.drone_list[i];
+                let dest_list = drone.pos.dest;
+                let points_to_avoid = [];
+
+                // console.log(drone);
+
+                for(let j=0; j < drone_swarm.drone_list.length; j++)
+                {
+                    if(j == i) continue;
+
+                    let other_drone     = drone_swarm.drone_list[j];
+                    let other_dest_list = other_drone.pos.dest;
+                    
+                    for(let q=0; q < other_dest_list.length; q++)
+                        points_to_avoid.push(other_dest_list[q]);
+                }
+
+                // drone.pos.dest = [];
+
+                for(let k=0; k < dest_list.length; k++)
+                {
+                    let dest = dest_list[k];
+                }
+            }
         break;
     }
+    console.log("-----");
 }
 
 function update_swarm_dest_click_event(e)
@@ -50,10 +73,10 @@ function update_swarm_dest(destX, destY)
                     y : destY + (DRONE_SWARM_FORMATION.line.drone_spacing * i) 
                 }
 
-                find_path(i, dest);
-
                 drone.pos.dest.push(dest);
             }
+
+            find_path();
         }
         break;
 
@@ -98,6 +121,8 @@ function update_swarm_dest(destX, destY)
 
                 drone.pos.dest.push(dest);
             }
+
+            find_path();
         }
         break;
 
@@ -124,6 +149,8 @@ function update_swarm_dest(destX, destY)
 
                 drone.pos.dest.push(dest);
             }
+
+            find_path();
         }
         break;
     }
@@ -184,19 +211,19 @@ $(() => {
         {
             if(e.keyCode == 49) // 1
             {
-                $("#swarm-formation").val(1).change();
+                $("#swarm-formation").val(1);
                 $("#swarm-formation").change();
             }
 
             if(e.keyCode == 50) // 2
             {
-                $("#swarm-formation").val(2).change();
+                $("#swarm-formation").val(2);
                 $("#swarm-formation").change();
             }
 
             if(e.keyCode == 51) // 3
             {
-                $("#swarm-formation").val(3).change();
+                $("#swarm-formation").val(3);
                 $("#swarm-formation").change();
             }
         }

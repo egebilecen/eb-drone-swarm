@@ -47,3 +47,40 @@ function angle_of(pt1, pt2, deg_360=true)
 
     return deg;
 }
+
+function get_perpendicular_point_on_line_from_given_point(line_point1, line_point2, given_point)
+{
+    let A = line_point1;
+    let B = line_point2;
+    let C = given_point;
+
+    let x1 = A.x;
+    let y1 = A.y;
+
+    let x2 = B.x;
+    let y2 = B.y;
+
+    let x3 = C.x;
+    let y3 = C.y;
+
+    let px  = x2 - x1;
+    let py  = y2 - y1;
+    let dAB = (px * px) + (py * py)
+
+    let u = ((x3 - x1) * px + (y3 - y1) * py) / dAB;
+
+    let x4 = x1 + u * px;
+    let y4 = y1 + u * py;
+
+    return {x : x4, y : y4};
+}
+
+function check_line_intersection_with_circle(line_start_point, line_end_point, circle_center_point, circle_radius)
+{
+    let perpendicular_point = get_perpendicular_point_on_line_from_given_point(line_start_point, line_end_point, circle_center_point);
+
+    if(distance_of(perpendicular_point, circle_center_point) < circle_radius)
+        return true;
+        
+    return false;
+}

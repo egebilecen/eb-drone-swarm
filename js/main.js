@@ -5,7 +5,8 @@ let   DPI        = window.devicePixelRatio;
 let   MOUSE_DOWN = false;
 let   CTRL_DOWN  = false;
 let   PREVENT_FORMATION_CHANGE_VIA_KEYS = false;
-let   DISPLAY_DRONE_SPACE = false;
+let   DISPLAY_DRONE_SPACE = true;
+let   DISABLE_MOVEMENT    = false;
 
 function fix_canvas_blur(canvas)
 {
@@ -78,7 +79,9 @@ setInterval(() => {
         if(drone.pos.dest.length > 0)
             draw_drone_path_line(ctx, drone);
         
-        drone.update_pos();
+        if(!DISABLE_MOVEMENT)
+            drone.update_pos();
+            
         draw_drone(ctx, drone);
     }
 
