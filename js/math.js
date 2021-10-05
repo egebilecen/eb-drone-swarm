@@ -84,3 +84,23 @@ function check_line_intersection_with_circle(line_start_point, line_end_point, c
         
     return false;
 }
+
+function get_future_position(drone, sec, dest_index=0)
+{
+    if(drone.pos.dest.length < 1)
+        throw("drone.pos.dest.length < 1")
+
+    let time_conversion = FPS * sec;
+
+    let heading = angle_of_rad(drone.pos, drone.pos.dest[dest_index])
+    let spd     = {
+        x : drone.spd * Math.cos(heading),
+        y : drone.spd * Math.sin(heading)
+    }
+    let future_point = {
+        x : drone.pos.x + (spd.x * time_conversion),
+        y : drone.pos.y + (spd.y * time_conversion)
+    }
+
+    return future_point;
+}

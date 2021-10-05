@@ -20,6 +20,7 @@ function add_debug_point(x, y)
 function random_int(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
+
 function random_color(opacity=1){
     return 'rgba('+random_int(1, 255)+','+random_int(1, 255)+','+random_int(1, 255)+','+opacity+')';
 }
