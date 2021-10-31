@@ -37,13 +37,29 @@ function find_path(path_finding_method=PATH_FINDING_METHOD.simple)
                         drone_points_to_avoid.push(other_drone.pos);
                         dest_points_to_avoid.push(other_drone.pos.dest[j]);
                     }
+                    
+                    let dest_reach_time = get_time_until_reaching_point(drone, dest);
+                    let time_split_ms   = 100;
+
+                    for(let q = 0; q < dest_reach_time / time_split_ms; q++)
+                    {
+                        let future_pos = get_future_position(drone, (time_split_ms * (q + 1)) / 1000, j);
+
+                        // debug
+                        // if(drone.id == 3)
+                        // {
+                        //     console.log(future_pos);
+                        // }
+                    }
 
                     // debug
-                    // if(drone.id == 3)
-                    // {
-                    //     console.log(drone_points_to_avoid);
-                    //     console.log(dest_points_to_avoid);
-                    // }
+                    if(drone.id == 3)
+                    {
+                        // console.log(drone_points_to_avoid);
+                        // console.log(dest_points_to_avoid);
+                        // console.log(dest_reach_time);
+                        // console.log(Date.now());
+                    }
                 }
             }
         break;
