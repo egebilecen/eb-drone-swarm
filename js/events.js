@@ -16,31 +16,27 @@ function find_path(path_finding_method=PATH_FINDING_METHOD.simple)
             {
                 let drone     = drone_swarm.drone_list[i];
                 let dest_list = drone.pos.dest;
-                let points_to_avoid = [];
-
-                // console.log(drone);
-
-                for(let j=0; j < drone_swarm.drone_list.length; j++)
-                {
-                    if(j == i) continue;
-
-                    let other_drone     = drone_swarm.drone_list[j];
-                    let other_dest_list = other_drone.pos.dest;
-                    
-                    for(let q=0; q < other_dest_list.length; q++)
-                        points_to_avoid.push(other_dest_list[q]);
-                }
+                let points_to_avoid;
 
                 // drone.pos.dest = [];
 
-                for(let k=0; k < dest_list.length; k++)
+                for(let j=0; j < dest_list.length; j++)
                 {
-                    let dest = dest_list[k];
+                    let dest = dest_list[j];
+                    points_to_avoid = [];
+
+                    for(let k=0; k < drone_swarm.drone_list.length; k++)
+                    {
+                        if(k == i) continue;
+
+                        let other_drone = drone_swarm.drone_list[k];
+                        points_to_avoid.push(other_drone.pos.dest[j]);
+                    }
                 }
             }
         break;
     }
-    console.log("-----");
+    // console.log("-----");
 }
 
 function update_swarm_dest_click_event(e)

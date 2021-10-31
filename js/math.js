@@ -48,10 +48,19 @@ function angle_of(pt1, pt2, deg_360=true)
     return deg;
 }
 
-function get_perpendicular_point_on_line_from_given_point(line_point1, line_point2, given_point)
+/* 
+                 o given_point
+                 |
+  point1         |             point2
+    o------------o----------------o
+                 ^ 
+          perpendicular point
+       (return value of function)
+*/
+function get_perpendicular_point_on_line_from_given_point(point1, point2, given_point)
 {
-    let A = line_point1;
-    let B = line_point2;
+    let A = point1;
+    let B = point2;
     let C = given_point;
 
     let x1 = A.x;
