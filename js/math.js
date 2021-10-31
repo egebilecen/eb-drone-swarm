@@ -94,6 +94,46 @@ function check_line_intersection_with_circle(line_start_point, line_end_point, c
     return false;
 }
 
+// https://math.stackexchange.com/a/1367732
+function check_two_circle_intersection(center_point1, center_point2, radius)
+{
+    let x1 = center_point1.x;
+    let y1 = center_point1.y;
+
+    let x2 = center_point2.x;
+    let y2 = center_point2.y;
+
+    let r1 = radius;
+    let r2 = radius;
+
+    let centerdx = x1 - x2;
+    let centerdy = y1 - y2;
+    let R = Math.sqrt(centerdx * centerdx + centerdy * centerdy);
+
+    if(!(Math.abs(r1 - r2) <= R && R <= r1 + r2)) // no intersection
+    { 
+        return [];
+    }
+  
+    let R2 = R*R;
+    let R4 = R2*R2;
+    let a = (r1*r1 - r2*r2) / (2 * R2);
+    let r2r2 = (r1*r1 - r2*r2);
+    let c = Math.sqrt(2 * (r1*r1 + r2*r2) / R2 - (r2r2 * r2r2) / R4 - 1);
+  
+    let fx = (x1+x2) / 2 + a * (x2 - x1);
+    let gx = c * (y2 - y1) / 2;
+    let ix1 = fx + gx;
+    let ix2 = fx - gx;
+  
+    let fy = (y1+y2) / 2 + a * (y2 - y1);
+    let gy = c * (x1 - x2) / 2;
+    let iy1 = fy + gy;
+    let iy2 = fy - gy;
+  
+    return [[ix1, iy1], [ix2, iy2]];
+}
+
 function get_future_position(drone, sec, dest_index=0)
 {
     if(drone.pos.dest.length < 1)
@@ -101,7 +141,7 @@ function get_future_position(drone, sec, dest_index=0)
 
     let time_conversion = FPS * sec;
 
-    let heading = angle_of_rad(drone.pos, drone.pos.dest[dest_index])
+    let heading = angle_of_rad(drone.pos, drone.pos.dest[dest_index]);
     let spd     = {
         x : drone.spd * Math.cos(heading),
         y : drone.spd * Math.sin(heading)
@@ -112,4 +152,9 @@ function get_future_position(drone, sec, dest_index=0)
     }
 
     return future_point;
+}
+
+function get_time_until_reaching_point(drone, dest_point)
+{
+    return distance_of(drone.pos, dest_point) / drone.spd / 60 * 1000; // 60 = FPS
 }

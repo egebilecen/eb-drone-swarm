@@ -51,6 +51,10 @@ class Drone
         {
             let dest    = this.pos.dest[0];
             let heading = angle_of_rad(this.pos, dest);
+            let spd     = {
+                x : this.spd * Math.cos(heading),
+                y : this.spd * Math.sin(heading)
+            };
 
             if(distance_of(this.pos, dest) <= 2.5)
             {
@@ -59,8 +63,8 @@ class Drone
             }
             else
             {
-                this.pos.x += this.spd * Math.cos(heading);
-                this.pos.y += this.spd * Math.sin(heading);
+                this.pos.x += spd.x;
+                this.pos.y += spd.y;
             }
 
             if(this.pos.x == dest.x && this.pos.y == dest.y) 

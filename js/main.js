@@ -6,7 +6,7 @@ let   MOUSE_DOWN = false;
 let   CTRL_DOWN  = false;
 let   PREVENT_FORMATION_CHANGE_VIA_KEYS = false;
 let   DISPLAY_DRONE_SPACE = true;
-let   DISABLE_MOVEMENT    = true;
+let   DISABLE_MOVEMENT    = false;
 
 function fix_canvas_blur(canvas)
 {
@@ -59,7 +59,8 @@ const PATH_FINDING_METHOD = {
 let drone_swarm = {
     dest       : { x : -1, y : -1 },
     formation  : DRONE_SWARM_FORMATION.line,
-    drone_list : []
+    drone_list : [],
+    extra_drone_spacing : 20
 };
 
 let last_formation     = drone_swarm.formation;

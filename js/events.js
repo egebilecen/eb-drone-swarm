@@ -14,24 +14,36 @@ function find_path(path_finding_method=PATH_FINDING_METHOD.simple)
         case PATH_FINDING_METHOD.simple:
             for(let i=(drone_swarm.drone_list.length - 1); i >= 0; i--)
             {
-                let drone     = drone_swarm.drone_list[i];
+                let drone = drone_swarm.drone_list[i];
+                let drone_points_to_avoid;
+                
                 let dest_list = drone.pos.dest;
-                let points_to_avoid;
+                let dest_points_to_avoid;
 
                 // drone.pos.dest = [];
 
                 for(let j=0; j < dest_list.length; j++)
                 {
                     let dest = dest_list[j];
-                    points_to_avoid = [];
+
+                    drone_points_to_avoid = [];
+                    dest_points_to_avoid  = [];
 
                     for(let k=0; k < drone_swarm.drone_list.length; k++)
                     {
                         if(k == i) continue;
 
                         let other_drone = drone_swarm.drone_list[k];
-                        points_to_avoid.push(other_drone.pos.dest[j]);
+                        drone_points_to_avoid.push(other_drone.pos);
+                        dest_points_to_avoid.push(other_drone.pos.dest[j]);
                     }
+
+                    // debug
+                    // if(drone.id == 3)
+                    // {
+                    //     console.log(drone_points_to_avoid);
+                    //     console.log(dest_points_to_avoid);
+                    // }
                 }
             }
         break;
@@ -54,7 +66,7 @@ function update_swarm_dest(destX, destY)
     drone_swarm.dest.x = destX;
     drone_swarm.dest.y = destY;
 
-    switch (drone_swarm.formation.id) 
+    switch(drone_swarm.formation.id) 
     {
         case DRONE_SWARM_FORMATION.line.id:
         {
@@ -66,7 +78,7 @@ function update_swarm_dest(destX, destY)
 
                 let dest = {
                     x : destX,
-                    y : destY + (DRONE_SWARM_FORMATION.line.drone_spacing * i) 
+                    y : destY + (DRONE_SWARM_FORMATION.line.drone_spacing * i) + (drone_swarm.extra_drone_spacing * i)
                 }
 
                 drone.pos.dest.push(dest);
@@ -107,12 +119,16 @@ function update_swarm_dest(destX, destY)
                 {
                     dest.x = last_elem(leader_drone.pos.dest).x - (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (even_drone_count + 1) * Math.cos(heading_even));
                     dest.y = last_elem(leader_drone.pos.dest).y - (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (even_drone_count + 1) * Math.sin(heading_even));
+
+                    dest.x += drone_swarm.extra_drone_spacing * (even_drone_count + 1);
                 }
                 // odd (placed to right side in formation)
                 else
                 {
                     dest.x = last_elem(leader_drone.pos.dest).x + (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (odd_drone_count) * Math.cos(heading_odd));
                     dest.y = last_elem(leader_drone.pos.dest).y + (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (odd_drone_count) * Math.sin(heading_odd));
+
+                    dest.x -= drone_swarm.extra_drone_spacing * (odd_drone_count);
                 }
 
                 drone.pos.dest.push(dest);
@@ -257,7 +273,7 @@ $(() => {
                 let last_drone = drone_swarm.drone_list[drone_swarm.drone_list.length - 1];
 
                 drone.pos.x = last_drone.pos.x;
-                drone.pos.y = last_drone.pos.y + DRONE_SWARM_FORMATION.line.drone_spacing;
+                drone.pos.y = last_drone.pos.y + DRONE_SWARM_FORMATION.line.drone_spacing + drone_swarm.extra_drone_spacing;
             }
             break;
 
@@ -276,12 +292,16 @@ $(() => {
                     {
                         drone.pos.x = leader_drone.pos.x - (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (even_drone_count + 1) * Math.cos(heading_even));
                         drone.pos.y = leader_drone.pos.y - (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (even_drone_count + 1) * Math.sin(heading_even));
+
+                        drone.pos.x += drone_swarm.extra_drone_spacing * (even_drone_count + 1);
                     }
-                    // odd (placed to right side in formation)
+                    // odd (placed to left side in formation)
                     else
                     {
                         drone.pos.x = leader_drone.pos.x + (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (odd_drone_count) * Math.cos(heading_odd));
                         drone.pos.y = leader_drone.pos.y + (DRONE_SWARM_FORMATION.v_shape.drone_spacing * (odd_drone_count) * Math.sin(heading_odd));
+
+                        drone.pos.x -= drone_swarm.extra_drone_spacing * (odd_drone_count);
                     }
                 }
             }
