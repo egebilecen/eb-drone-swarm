@@ -179,6 +179,13 @@ $(() => {
     // Initial input values
     $("#swarm-spacing").val(drone_swarm.formation.drone_spacing);
 
+    if(DISABLE_MOVEMENT)
+        $("#movement-control").attr("status", "0").html(">");
+    else
+    {
+        $("#movement-control").attr("status", "1").html("|&nbsp;|");
+    }
+
     // windows resize
     $(window).on('resize', function(){
         fix_canvas_blur(canvas);
@@ -310,7 +317,7 @@ $(() => {
             case DRONE_SWARM_FORMATION.circle.id:
             {
                 // spawns drones in circular angle
-                let angle_per_drone = 360 / drone_swarm.drone_list.length;
+                let angle_per_drone = 360 / (drone_swarm.drone_list.length == 0 ? 1 : drone_swarm.drone_list.length);
                 let circle_center_point = {
                     x : (drone_swarm.drone_list.length == 0 ? 
                             drone.pos.x : drone_swarm.drone_list[0].pos.x - (DRONE_SWARM_FORMATION.circle.drone_spacing * Math.cos(0))),
@@ -354,12 +361,28 @@ $(() => {
         }
     });
 
+    // Disable / Enable Movement
+    $("#movement-control").on("click", () => {
+        let status = $("#movement-control").attr("status");
+
+        if(status == 1)
+        {
+            DISABLE_MOVEMENT = true;
+            $("#movement-control").attr("status", "0").html(">");
+        }
+        else
+        {
+            DISABLE_MOVEMENT = false;
+            $("#movement-control").attr("status", "1").html("|&nbsp;|");
+        }
+    });
+
     // Change swarm formation
     $("#swarm-formation").on("change", () => {
         let formation_id = parseInt($("#swarm-formation").val());
         let revert_selection = false;
 
-        switch (formation_id) 
+        switch(formation_id) 
         {
             case DRONE_SWARM_FORMATION.line.id:
             {

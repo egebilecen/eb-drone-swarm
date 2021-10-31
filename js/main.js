@@ -6,7 +6,7 @@ let   MOUSE_DOWN = false;
 let   CTRL_DOWN  = false;
 let   PREVENT_FORMATION_CHANGE_VIA_KEYS = false;
 let   DISPLAY_DRONE_SPACE = true;
-let   DISABLE_MOVEMENT    = false;
+let   DISABLE_MOVEMENT    = true;
 
 function fix_canvas_blur(canvas)
 {
