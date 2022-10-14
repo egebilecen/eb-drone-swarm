@@ -1,8 +1,12 @@
 # 2D Drone Swarm Demonstration
+
+[Click here](https://egebilecen.github.io/eb-drone-swarm/drone_swarm.html) for live preview. (Movement is disabled by default. Click to the most top right button.)
+
 <b>How do drones position themselves in the swarm?</b><br>
 TODO
 
 <b>Supported formations:</b>
+
 * Line
 * V Shape
 * Circle
@@ -19,6 +23,7 @@ Demonstration of waypoints. (Small numbers on waypoint points are indicates the 
 ![Screenshot_3](https://user-images.githubusercontent.com/29331682/129492463-2400b45b-63f6-49c2-944b-d0ef84a72a2b.png)
 
 # Planned Updates
+
 * Formation rotation toward the destination.
 * New formation(s).
   * Spread
